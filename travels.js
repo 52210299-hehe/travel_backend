@@ -55,10 +55,10 @@ router.get('/scheduled_travels',(req ,res)=>
 
 router.post("/travels", (req, res) => {
   
-  const Destination = req.body.name;
-  const TravelDate = req.body.price;
-  const Description = req.body.category;
-  const Price = req.body.price;
+  const Destination = req.body.Destination;
+  const TravelDate = req.body.TravelDate;
+  const Description = req.body.Description;
+  const Price = req.body.Price;
  
   if (isNaN(Price) || Price === "" || Price < 0) {
     return res.status(400).json({ error: "Price must be a valid number" });
