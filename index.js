@@ -28,6 +28,16 @@ app.get("/", (req, res) => {
 // Start server
 const PORT = process.env.PORT || 5000;
 
+app.get("/test-db", (req, res) => {
+  connection.query("SELECT 1", (err, results) => {
+    if (err) {
+      console.error("DB test failed:", err);
+      return res.status(500).json({ message: "DB test failed", error: err });
+    }
+    res.json({ message: "DB test OK", results });
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
