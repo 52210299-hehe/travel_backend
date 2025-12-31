@@ -1,11 +1,11 @@
 const mysql = require('mysql2');
 
 const connection = mysql.createPool({
-  host: process.env.DB_HOST,      // Railway host from Render env
-  port: process.env.DB_PORT,      // Railway port from Render env
-  user: process.env.DB_USER,      // Railway user from Render env
-  password: process.env.DB_PASS,  // Railway password from Render env
-  database: process.env.DB_NAME   // Railway DB name from Render env
+  host: "interchange.proxy.rlwy.net",      // Railway host from Render env
+  port: 10339,      // Railway port from Render env
+  user: "root",      // Railway user from Render env
+  password: "niXqYPtbzzQGRIMLrweCyEQqMpuaXhld",  // Railway password from Render env
+  database: "railway"   // Railway DB name from Render env
 });
 
 // Test the connection
