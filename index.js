@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
 });
 
 // Start server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 app.get("/test-db", (req, res) => {
   connection.query("SELECT 1", (err, results) => {
