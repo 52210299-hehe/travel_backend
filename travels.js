@@ -2,7 +2,7 @@ const express = require("express");
 const db = require("./db");
 const router = express.Router();
 
-
+//select all travels
 router.get('/travels',(req ,res)=>
 {
  const q = "select * from travels" ;
@@ -16,32 +16,29 @@ router.get('/travels',(req ,res)=>
  })
 });
 
-router.get('/scheduled_travels',(req ,res)=>
-{
- const q = "select * from scheduled_travel" ;
- db.query(q, (err,data) =>{
-  if (err)
-  {
-    console.log(err);
-    return res.json(err);
-  }
-  return res.json(data);
- })
+//get one travel by id
+ router.get('/travels/:TravelTemplateID', (req, res) => {
+  const TravelTemplateID = req.params.TravelTemplateID;
+
+  db.query(
+    'SELECT * FROM travels WHERE TravelTemplateID = ?',
+    [TravelTemplateID],
+    (err, rows) => {
+      if (err) {
+        console.error('Error fetching travel:', err);
+        return res.status(500).json({ message: 'Server error' });
+      }
+
+      if (rows.length > 0) {
+        res.json(rows[0]);
+      } else {
+        res.status(404).json({ message: 'Travel not found' });
+      }
+    }
+  );
 });
- router.get('/travels/:TravelTemplateID', async (req, res) => {
-        const TravelTemplateID = req.params.TravelTemplateID;
-        try {            
-          const rows = await db.query('SELECT * FROM travels WHERE TravelTemplateID = ?', [TravelTemplateID]);
-            if (rows.length > 0) {
-                res.json(rows[0]); 
-            } else {
-                res.status(404).json({ message: 'travel not found' });
-            }
-        } catch (error) {
-            console.error('Error fetching travel:', error);
-            res.status(500).json({ message: 'Server error' });
-        }
-    });
+
+    //delete a travel by id
     router.delete("/travels/:TravelTemplateID", (req, res) => {
   const id = req.params.TravelTemplateID;
   console.log (id);
@@ -52,7 +49,7 @@ router.get('/scheduled_travels',(req ,res)=>
     return res.json(data);
   });
 });
-
+//create a new travel
 router.post("/travels", (req, res) => {
   
   const Destination = req.body.Destination;
@@ -70,6 +67,7 @@ router.post("/travels", (req, res) => {
     return res.json(data);
   });
 });
+//update a travel by id
 router.put("/travels/:TravelTemplateID", (req, res) => {
   const id = req.params.TravelTemplateID;
   const q = "UPDATE travels SET `Destination`= ?, `TravelDate`= ?, `Description`= ?, `Price`= ? WHERE TravelTemplateID = ?";
@@ -87,6 +85,8 @@ router.put("/travels/:TravelTemplateID", (req, res) => {
     return res.json(data);
   });
 });
+
+
 
 
 
