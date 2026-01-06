@@ -20,7 +20,7 @@ router.post("/bookings", (req, res) => {
     return res.status(400).json({ message: "Invalid user id" });
   }
 
-  const sql = 'SELECT * FROM bookings WHERE CustomerID = ?';
+  const sql = 'SELECT bookings.*, travels.Destination FROM bookings JOIN travels ON travels.TravelTemplateID = bookings.TravelID WHERE bookings.CustomerID = ?';
 
   db.query(sql, [id], (err, rows) => {
     if (err) {
