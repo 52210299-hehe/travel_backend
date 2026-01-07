@@ -21,9 +21,11 @@ const checkQuery = "SELECT 1 FROM users WHERE Username = ?";
     if (result.length > 0) {
       return res.status(409).json({ message: "Username already exists" });
     }
-    if(isNaN(Phone) || Phone === "" || Phone < 0) {
+
+    if(isNaN(Phone) || Phone < 0 && Phone !== undefined) {
       return res.status(400).json({ message: "Invalid phone number" });
     }
+  
 
   const q = "INSERT INTO users( `Username`, `Password`, `FullName`, `Email`, `Phone`, `RoleID`) VALUES (?,?,?,?,?,?)";
 
